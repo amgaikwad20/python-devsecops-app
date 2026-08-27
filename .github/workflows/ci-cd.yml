@@ -9,7 +9,7 @@ jobs:
 
   build-test-sonar:
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
 
