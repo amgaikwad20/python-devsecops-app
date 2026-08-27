@@ -1,23 +1,22 @@
-name: Python DevSecOps CI/CD
+name: Python DevSecOps CI
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
 
-  build-test-scan:
+  build-test-sonar:
 
     runs-on: ubuntu-latest
 
     steps:
 
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -33,18 +32,7 @@ jobs:
           pytest
 
       - name: SonarQube Scan
-        # We'll configure this after SonarQube setup
-
-      - name: Build Docker image
-        run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/python-devsecops-app:${{ github.run_number }} .
-
-      - name: Trivy Scan
-        # We'll configure this next
-
-      - name: Docker Login
-        # Docker Hub credentials
-
-      - name: Push Docker Image
-        run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/python-devsecops-app:${{ github.run_number }}
+        uses: SonarSource/sonarqube-scan-action@v7
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
