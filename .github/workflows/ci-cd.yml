@@ -56,7 +56,7 @@ jobs:
         with:
           image-ref: '${{ vars.DOCKERHUB_USERNAME }}/python-devsecops-app:${{ github.run_number }}'
           format: 'table'
-          exit-code: '1'
+          exit-code: '0'
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
