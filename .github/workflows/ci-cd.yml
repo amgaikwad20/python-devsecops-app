@@ -77,4 +77,4 @@ jobs:
       - name: Push latest image
         run: |
           docker push ${{ vars.DOCKERHUB_USERNAME }}/python-devsecops-app:latest
-```
+
